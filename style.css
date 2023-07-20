@@ -1,9 +1,43 @@
-img{
-    width: 50px;
-    height:50px;
-}
 
 html,body{
     padding: 0;
     margin: 0;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+}
+
+.image{
+    width: 50px;
+    height: 50px;
+}
+
+.nav-items > ul{
+    list-style: none;
+    display: flex;
+}
+
+.nav-items > ul > li {
+    padding: 10px;
+}
+
+.card{
+    width: 200px;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+}
+
+.card > img{
+    width: 100%;
+}
+
+.restro{
+    display: flex;
+    flex-wrap: wrap;
 }
