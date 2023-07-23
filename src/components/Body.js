@@ -3,6 +3,7 @@ import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 
 import ShimmerUi from "./ShimmerUI";
+import { Link } from "react-router-dom";
 
 function filterData(searchInput, restaurants){
     const data = restaurants.filter((rest)=> rest.info.name.toLowerCase().includes(searchInput.toLowerCase()));
@@ -23,9 +24,9 @@ const Body = () => {
       try {
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.6868159&lng=83.2184815&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
       const json = await data.json();
-      console.log(json);
-      setRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-      setFilteredRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      // console.log(json);
+      setRestaurants(json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      setFilteredRestaurants(json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
       } catch (error) {
         console.log(error.message);
       }
@@ -57,7 +58,7 @@ const Body = () => {
       <div className="restro">
         { (filteredRestaurants?.length === 0) ? <h1>No Restaurants found your match</h1> : filteredRestaurants.map((restaurant)=>{
             return (
-            <RestaurantCard restaurant={...restaurant} key={restaurant.info.id} />
+              <Link to={"/restaurant/" + restaurant.info.id} key={restaurant.info.id}><RestaurantCard restaurant={...restaurant}  /></Link>
             )
           })}
       </div>
