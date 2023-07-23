@@ -1,17 +1,39 @@
 import RestaurantCard from "./RestaurantCard";
-import { restaurant } from "./Config";
-import { useState } from "react";
+// import { restaurant } from "./Config";
+import { useState, useEffect } from "react";
 
-function filterData(searchInput, restaurant){
-    const data = restaurant.filter((rest)=> rest.title.includes(searchInput));
+import ShimmerUi from "./ShimmerUI";
+
+function filterData(searchInput, restaurants){
+    const data = restaurants.filter((rest)=> rest.info.name.toLowerCase().includes(searchInput.toLowerCase()));
     return data;
 }
 
+
 const Body = () => {
   const [searchInput, setSearchInput] = useState("");
-    const [restaurants, setRestaurants] = useState(restaurant);
+    const [restaurants, setRestaurants] = useState([]);
+    const [ filteredRestaurants, setFilteredRestaurants] = useState([]);
 
-  return (
+    useEffect(()=>{
+      getApiData();
+    },[])
+
+    async  function getApiData(){
+      try {
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.6868159&lng=83.2184815&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+      const json = await data.json();
+      // console.log(json);
+      setRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      setFilteredRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    if (!restaurants) return null;
+
+  return (restaurants?.length === 0) ? <ShimmerUi/> : (
     <>
       <div className="search-bar">
         <input
@@ -26,15 +48,15 @@ const Body = () => {
           className="search-button"
             onClick={()=>{
                 const dataFilter = filterData(searchInput, restaurants);
-                setRestaurants(dataFilter);
+                setFilteredRestaurants(dataFilter);
             }}
         >
           Search
         </button>
       </div>
       <div className="restro">
-        {restaurants.map((restaurant)=>{
-            return (<RestaurantCard restaurant={...restaurant} key={restaurant.id} />)
+        { (filteredRestaurants?.length === 0) ? <h1>No Restaurants found your match</h1> : filteredRestaurants.map((restaurant)=>{
+            return (<RestaurantCard restaurant={...restaurant} key={restaurant.info.id} />)
           })}
         {/* <RestaurantCard
           restaurant={restaurant.products[0]}
