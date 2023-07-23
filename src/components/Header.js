@@ -1,22 +1,22 @@
-import applogo from "../../images/applogo.jpg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isLoggedin, setIsLoggedIn] = useState(false);
 
   return (
     <div className="header">
-      <img className="image" src={applogo} />
+      <img className="image" src="https://cdna.artstation.com/p/assets/images/images/023/767/398/large/solohive-technology-jawx-hussain-square-11.jpg?1580280648" />
       <div className="nav-items">
         <ul>
           <li>
-            <a href="#">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <a href="#">About</a>
+          <Link to="/about">About</Link>
           </li>
           <li>
-            <a href="#">Contact us</a>
+          <Link to="/contact">Contact</Link>
           </li>
           <li>
             <a href="#">Cart</a>

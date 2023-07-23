@@ -43,3 +43,19 @@ html,body{
     display: flex;
     flex-wrap: wrap;
 }
+
+
+.shimmer-container{
+    width: 200px;
+    height: 300px;
+    margin: 20px;
+    background: lightgray;
+}
+
+.container{
+    margin: 10px;
+}
+
+.menu{
+    display: flex;
+}
