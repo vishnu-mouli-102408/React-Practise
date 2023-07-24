@@ -4,11 +4,10 @@ import { useState, useEffect } from "react";
 
 import ShimmerUi from "./ShimmerUI";
 import { Link } from "react-router-dom";
+import { filterData } from "../../utils/utils";
+import useOffline from "../../utils/useOffline";
 
-function filterData(searchInput, restaurants){
-    const data = restaurants.filter((rest)=> rest.info.name.toLowerCase().includes(searchInput.toLowerCase()));
-    return data;
-}
+
 
 
 const Body = () => {
@@ -22,15 +21,22 @@ const Body = () => {
 
     async  function getApiData(){
       try {
-        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.6868159&lng=83.2184815&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.6868159&lng=83.2184815&page_type=DESKTOP_WEB_LISTING");
       const json = await data.json();
-      console.log(json);
-      setRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-      setFilteredRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      // console.log(json);
+      const x = json.data.cards.filter((item)=>item.cardType === "seeAllRestaurants")
+      setRestaurants(x[0].data.data.cards);
+      setFilteredRestaurants(x[0].data.data.cards);
       } catch (error) {
         console.log(error.message);
       }
     }
+
+   const online = useOffline();
+
+   if(!online) {
+      return <h1>Oops something went wrong!!</h1>
+   }
 
     if (!restaurants) return null;
 
@@ -58,7 +64,7 @@ const Body = () => {
       <div className="restro">
         { (filteredRestaurants?.length === 0) ? <h1>No Restaurants found your match</h1> : filteredRestaurants.map((restaurant)=>{
             return (
-              <Link to={"/restaurant/" + restaurant.info.id} key={restaurant.info.id}><RestaurantCard restaurant={...restaurant}  /></Link>
+              <Link to={"/restaurant/" + restaurant.data.id} key={restaurant.data.id}><RestaurantCard restaurant={...restaurant}  /></Link>
             )
           })}
       </div>

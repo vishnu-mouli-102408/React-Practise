@@ -6,12 +6,12 @@ const RestaurantCard = ({ restaurant }) => {
       <img
         src={
           IMAGE_CDN_URL +
-          restaurant.info.cloudinaryImageId
+          restaurant.data.cloudinaryImageId
         }
       />
-      <h1>{restaurant.info.name}</h1>
-      <h2>{restaurant.info.cuisines.join(",")}</h2>
-      <h3>Rating: {restaurant.info.avgRatingString}</h3>
+      <h1>{restaurant.data.name}</h1>
+      <h2>{restaurant.data.cuisines.join(",")}</h2>
+      <h3>Rating: {restaurant.data.avgRatingString}</h3>
     </div>
   );
 };
