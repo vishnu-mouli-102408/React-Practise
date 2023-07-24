@@ -11,6 +11,14 @@ const Menu = () => {
 
   useEffect(() => {
     getRestaurantInfo();
+    // const timer= setInterval(() => {
+    //   console.log("Restaurant");
+    // }, 1000);
+
+    // return () => {
+    //   clearInterval(timer)
+    //   console.log("unmounted");
+    // };
   }, []);
 
   async function getRestaurantInfo() {
