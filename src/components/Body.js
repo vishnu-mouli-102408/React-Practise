@@ -42,9 +42,10 @@ const Body = () => {
 
   return (restaurants?.length === 0) ? <ShimmerUi/> : (
     <>
-      <div className="container">
+      <div className="p-4 text-center">
         <input
-          className="search-input"
+          className="p-2 m-1 focus:bg-blue-100"
+          placeholder="Enter here"
           type="text"
           value={searchInput}
           onChange={(e) => {
@@ -52,7 +53,7 @@ const Body = () => {
           }}
         />
         <button
-          className="search-button"
+          className="bg-sky-500 hover:bg-sky-700 p-2 rounded-3xl text-white font-semibold"
             onClick={()=>{
                 const dataFilter = filterData(searchInput, restaurants);
                 setFilteredRestaurants(dataFilter);
@@ -61,7 +62,7 @@ const Body = () => {
           Search
         </button>
       </div>
-      <div className="restro">
+      <div className="flex flex-wrap justify-center">
         { (filteredRestaurants?.length === 0) ? <h1>No Restaurants found your match</h1> : filteredRestaurants.map((restaurant)=>{
             return (
               <Link to={"/restaurant/" + restaurant.data.id} key={restaurant.data.id}><RestaurantCard restaurant={...restaurant}  /></Link>
