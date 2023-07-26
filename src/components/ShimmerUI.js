@@ -3,8 +3,8 @@
 const ShimmerUi = () => {
   return (
     <>
-      <div>
-          {Array(10).fill("").map((e, index)=><div key={index} className="shimmer-container"></div> )}
+      <div className="flex flex-wrap justify-center">
+          {Array(15).fill("").map((e, index)=><div key={index} className="w-52 h-72 bg-slate-300 p-4 m-4"></div> )}
       </div>
     </>
   );
