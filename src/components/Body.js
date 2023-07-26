@@ -24,9 +24,15 @@ const Body = () => {
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.6868159&lng=83.2184815&page_type=DESKTOP_WEB_LISTING");
       const json = await data.json();
       // console.log(json);
+      const y = json?.data?.cards?.filter((item)=> item?.card?.card?.gridElements?.infoWithStyle["@type"] == "type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle").map((item)=> item?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      const z = y.flat();
+      // console.log(z);
+      setRestaurants(z);
+      setFilteredRestaurants(z);
       const x = json.data.cards.filter((item)=>item.cardType === "seeAllRestaurants")
-      setRestaurants(x[0].data.data.cards);
-      setFilteredRestaurants(x[0].data.data.cards);
+      // setRestaurants(x[0].data.data.cards);
+      // setFilteredRestaurants(x[0].data.data.cards);
+      // console.log(x[0].data.data.cards);
       } catch (error) {
         console.log(error.message);
       }
@@ -65,7 +71,7 @@ const Body = () => {
       <div className="flex flex-wrap justify-center">
         { (filteredRestaurants?.length === 0) ? <h1>No Restaurants found your match</h1> : filteredRestaurants.map((restaurant)=>{
             return (
-              <Link to={"/restaurant/" + restaurant.data.id} key={restaurant.data.id}><RestaurantCard restaurant={...restaurant}  /></Link>
+              <Link to={"/restaurant/" + restaurant.info.id} key={restaurant.info.id}><RestaurantCard restaurant={...restaurant}  /></Link>
             )
           })}
       </div>

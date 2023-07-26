@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import userContext from "../../utils/userContext";
 
 const Header = () => {
   const [isLoggedin, setIsLoggedIn] = useState(false);
+
+  const {user} = useContext(userContext);
 
   return (
     <div className="flex justify-between bg-gray-200 p-2 shadow-md">
@@ -26,6 +29,9 @@ const Header = () => {
           </li>
           <li className="p-3 hover:text-xl hover:bg-blue-200 rounded-full">
             <a href="#">Cart</a>
+          </li>
+          <li className="p-3 hover:text-xl hover:bg-blue-200 rounded-full">
+            <a href="#">{user.name}</a>
           </li>
         </ul>
       </div>
