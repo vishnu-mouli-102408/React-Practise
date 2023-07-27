@@ -1,11 +1,14 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import userContext from "../../utils/userContext";
+// import userContext from "../../utils/userContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [isLoggedin, setIsLoggedIn] = useState(false);
 
-  const {user} = useContext(userContext);
+  // const {user} = useContext(userContext);
+
+  const cartItems = useSelector(store => store.cart.items)
 
   return (
     <div className="flex justify-between bg-gray-200 p-2 shadow-md">
@@ -28,11 +31,11 @@ const Header = () => {
             <Link to="/instamart">Instamart</Link>
           </li>
           <li className="p-3 hover:text-xl hover:bg-blue-200 rounded-full">
-            <a href="#">Cart</a>
+            <Link to="/cart">Cart - {cartItems.length}</Link>
           </li>
-          <li className="p-3 hover:text-xl hover:bg-blue-200 rounded-full">
+          {/* <li className="p-3 hover:text-xl hover:bg-blue-200 rounded-full">
             <a href="#">{user.name}</a>
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className="px-3 py-1 m-4 h-10 font-sans font-medium text-lg hover:text-xl hover:bg-red-300 rounded-full">

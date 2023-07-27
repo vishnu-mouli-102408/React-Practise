@@ -6,6 +6,8 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Menu from "./components/Menu";
 import userContext from "../utils/userContext";
+import { Provider } from "react-redux";
+import Cart from "./components/Cart";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -13,6 +15,7 @@ import Body from "./components/Body";
 
 import "../style.css";
 import Profile from "./components/Profile";
+import store from "../utils/store";
 
 const Instamart = lazy(() => import("./components/Instamart"));
 
@@ -25,6 +28,7 @@ const AppLayout = () => {
   });
 
   return (
+    <Provider store={store}>
     <userContext.Provider value={{user:user}}>
     <div className="bg-sky-100">
       <Header />
@@ -32,6 +36,7 @@ const AppLayout = () => {
       <Footer />
     </div>
     </userContext.Provider>
+    </Provider>
   );
 };
 
@@ -71,6 +76,10 @@ const appRouter = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "/cart",
+        element: <Cart />,
+      }
     ],
   },
 ]);
